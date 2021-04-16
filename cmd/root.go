@@ -24,18 +24,19 @@ import (
 	"github.com/spf13/viper"
 )
 
-var cfgFile string
+var Verbose string
+var Target string
+var Username string
+var Password string
+var Threads int8
+var BatchSize int8
+var BatchInterval int64
 
 // rootCmd represents the base command when called without any subcommands
 var rootCmd = &cobra.Command{
 	Use:   "snake-many-head",
-	Short: "A brief description of your application",
-	Long: `A longer description that spans multiple lines and likely contains
-examples and usage of using your application. For example:
-
-Cobra is a CLI library for Go that empowers applications.
-This application is a tool to generate the needed files
-to quickly create a Cobra application.`,
+	Short: "Hydra rip-off",
+	Long: `Authentication brute forcing tool.`,
 	// Uncomment the following line if your bare application
 	// has an action associated with it:
 	// Run: func(cmd *cobra.Command, args []string) { },
@@ -54,7 +55,13 @@ func init() {
 	// Cobra supports persistent flags, which, if defined here,
 	// will be global for your application.
 
-	rootCmd.PersistentFlags().StringVar(&cfgFile, "config", "", "config file (default is $HOME/.snake-many-head.yaml)")
+	rootCmd.PersistentFlags().CountP(&Verbose, "verbose", "v", "set verbosity level")
+	rootCmd.PersistentFlags().StringVar(&Target, "target", "", "set the target or target file")
+	rootCmd.PersistentFlags().StringVarP(&Username, "username", "u", "set the username or username file")
+	rootCmd.PersistentFlags().StringVarP(&Password, "password", "p", "set the password or password file")
+	rootCmd.PersistentFlags().IntVarP(&Threads, "threads", "t", "set the number of threads")
+	rootCmd.PersistentFlags().IntVarP(&BatchSize, "batch-size", "", "set the number of requests per batch")
+	rootCmd.PersistentFlags().IntVarP(&BatchInterval, "batch-interval", "", "set the interval between batches")
 
 	// Cobra also supports local flags, which will only run
 	// when this action is called directly.
